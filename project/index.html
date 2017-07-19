@@ -121,7 +121,7 @@
         Accept: 'application/vnd.github.v3.raw'
       },
       type: 'get',
-      url: 'https://api.github.com/users/https://github.com/sirudduk/repos',
+      url: 'https://api.github.com/users/sirudduk/repos',
       success: function (data) {
         var repos = data.sort(function(a, b) {
           return (b.stargazers_count - a.stargazers_count)
