@@ -7,7 +7,7 @@
   <meta name="keyword" content="sirudduk, vuejs">
   <title>
     
-      Tags | sirudduk dev blog
+      About | sirudduk dev blog
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -104,55 +104,38 @@
   </div>
 </header>
 
-    <div id="article-banner">
-  <h2>Tags</h2>
-  <p class="post-date">test</p>
-</div>
-<main class="app-body">
-  <div id="tag-cloud">
-    
-      <a class="tag1" data-name="tag-vue.js">vue.js</a>
-    
-      <a class="tag2" data-name="tag-javascript">javascript</a>
-    
+    <div id="about-banner" style="background-image: url(http://file.muyutech.com/about.jpg)"></div>
+<div class="author">
+  <div class="head">
+    <img src="https://avatars3.githubusercontent.com/u/16443628?v=3&s=460" />
   </div>
-  
-    <div class="tag-list">
-      <h3 class="tag-name" id="tag-vue.js">vue.js</h3>
-      
-        <ul class="tag-preview">
-          <li>
-            <a href="/2017/07/19/test/">블로그 테스트입니다.</a>
-          </li>
-        </ul>
-        
-    </div>
+  <h3>sirudduk</h3>
+  <p class="discription">The end is always near.</p>
+  <section class="share-icons">
     
-    <div class="tag-list">
-      <h3 class="tag-name" id="tag-javascript">javascript</h3>
-      
-        <ul class="tag-preview">
-          <li>
-            <a href="/2017/07/19/test/">블로그 테스트입니다.</a>
-          </li>
-        </ul>
-        
-    </div>
     
-</main>
+    
+      <a class="icon-github" href="https://github.com/https://github.com/sirudduk" target="_blank">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+    
+    
+  </section>
+</div>
 
 <script>
   (function () {
-    var url = 'http://sirudduk.github.io/tags/index.html'
-    $('#article-banner').geopattern(url)
     $('.header').removeClass('fixed-header')
-
-    var tag = location.hash.replace('#', '')
-    if (tag) {
-      var tagId = "#tag-" + tag;
-      $("html, body").animate({
-        scrollTop: $(tagId).offset().top 
-      }, 400)
+    var windowH = $(window).height();
+    var author = $('.author')
+    var bodyH = author.offset().top + author[0].offsetHeight + 71;
+    if (bodyH < windowH) {
+      author.css({
+        'margin-bottom': windowH - bodyH
+      })
     }
   })();
 </script>
