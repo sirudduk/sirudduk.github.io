@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="끄적끄적">
+  <meta name="keyword" content="sirudduk, vuejs">
+  <title>
+    
+      프로토타입, 프로토타입 체이닝 | sirudduk dev blog
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+</head>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>sirudduk dev blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>프로토타입, 프로토타입 체이닝</h2>
+  <p class="post-date">2017-07-20</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body">
+  <article class="post-article">
+    <section class="markdown-content"><h2 id="prototype-chaining"><a href="#prototype-chaining" class="headerlink" title="prototype chaining"></a>prototype chaining</h2><h4 id="1-프로토타입의-의미"><a href="#1-프로토타입의-의미" class="headerlink" title="1. 프로토타입의 의미"></a>1. 프로토타입의 의미</h4><p>자바와 같은 객체지향 프로그래밍에서는 클래스를 정의하고 이를 통해 객체를 생성하지만, 자바스크립트에서는 이러한 클래스 개념이 없다.<br>대신 객체 리터럴이나 생성자 함수를 통해 객체를 생성하고 이때 생성된 부모 객체가 바로 <strong>프로토타입</strong>객체 이다.<br>이 <strong>프로토타입</strong> 객체를 통해 다른 언어처럼 상속을 구현할수 있다.<br>자바스크립트의 모든 객체는 부모인 프로토타입 객체를 가리키는 참조 링크 형태의 숨겨진 프로퍼티가 있다.<br><strong>ECMAScript</strong>에서는 이러한 링크를 <strong>암묵적 프로토타입 링크</strong>(implicit prototype link)라고 부르며 이러한 링크는 모든 객체의 <strong>[[Prototype]]</strong>프로퍼티에 저장된다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Person 생성자 함수</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">	<span class="keyword">this</span>.name = name;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// foo 객체 생성</span></div><div class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Person(<span class="string">'foo'</span>);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.dir(Person);</div><div class="line"><span class="built_in">console</span>.dir(foo);</div></pre></td></tr></table></figure>
+<p>위 예제의 출력 결과를 확인해보면 <code>Person</code>생성자 함수의 <code>prototype</code> 프로퍼티로 <code>Person.prototype</code>객체를 가르키고 <code>Person.prototype</code>객체의 <code>constructor</code>는 <code>Person</code>생성자 함수를 가르킨다.<br>그리고 새로 생성된 <code>foo</code>객체의 <code>__proto__</code>,즉 [[Prototype]]은 <code>Person.prototype</code>객체를 가리킨다.<br>(<code>__proto__</code>는 크롬이나 파이어폭스에서 명시적으로 제공하는 프로퍼티이고 <strong>ECMAScript</strong>에서는 [[Prototype]]프로퍼티라 칭한다. 따라서 서로 같다고 간주하면 된다.)<br>다시말해 <code>__proto__</code>프로퍼티는 모든 객체에 존재하는 숨겨진 프로퍼티로 객체 자신의 프로토타입 객체를 가리키는 참조 링크 정보다.</p>
+<h4 id="2-프로토타입-체이닝"><a href="#2-프로토타입-체이닝" class="headerlink" title="2. 프로토타입 체이닝"></a>2. 프로토타입 체이닝</h4><h5 id="2-1-객체-리터럴-방식으로-생성된-객체의-프로토타입-체이닝"><a href="#2-1-객체-리터럴-방식으로-생성된-객체의-프로토타입-체이닝" class="headerlink" title="2-1 객체 리터럴 방식으로 생성된 객체의 프로토타입 체이닝"></a>2-1 객체 리터럴 방식으로 생성된 객체의 프로토타입 체이닝</h5><p><strong>프로토타입 체이닝</strong>이란 자바스크립트에서 특정 객체의 프로퍼티나 메서드에 접근하려고 할 때, 해당 객체에 접근하려는 프로퍼티 또는 메서드가 없다면 [[Prototype]]링크를 따라 자신의 부모 역할을 하는 프로토타입 객체의 프로퍼티를 차례대로 검색하는 것을 <strong>프로토타입 체이닝</strong>이라고 한다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Obj = &#123;</div><div class="line">	<span class="attr">name</span>: <span class="string">'foo'</span>,</div><div class="line">	<span class="attr">sayName</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'My name is'</span> + <span class="keyword">this</span>.name);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Obj.sayName();	<span class="comment">// My name is foo</span></div><div class="line"><span class="built_in">console</span>.log(Obj.hasOwnproperty(<span class="string">'name'</span>)); <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(Obj.hasOwnproperty(<span class="string">'age'</span>));  <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<p>위 예제를 살펴보면 <code>Obj.hasOwnproperty()</code>메서드가 <code>Obj</code>객체의 메서드가 아닌데 정상동작 하였다.<br>앞에서 객체를 리터럴방식으로 생성하였을때는 <code>Object()</code>생성자 함수를 통해 생성된다고 했다.<br>이때 프로토타입 체이닝으로 인해 <code>Obj</code>객체의 [[Prototype]] 링크를 따라 <code>Object.prototype</code>프로토타입 객체 내에 <code>hasOwnProperty()</code>메서드가 있는지 검색하여 실행한다.<br><code>hasOwnProperty()</code>메서드는 자바스크립트 표준 API로 <code>Obeject.prototype</code>에 포함되어 있다.<br>따라서 <code>Obj</code>객체내에 <code>hasOwnProperty()</code>메서드가 없어도 에러가 나지 않고 정상적으로 코드가 수행된다.</p>
+<h5 id="2-2-생성자-함수-방식으로-생성된-객체와-프로토타입-체이닝"><a href="#2-2-생성자-함수-방식으로-생성된-객체와-프로토타입-체이닝" class="headerlink" title="2-2 생성자 함수 방식으로 생성된 객체와 프로토타입 체이닝"></a>2-2 생성자 함수 방식으로 생성된 객체와 프로토타입 체이닝</h5><p>위의 <strong>객체 리터럴 방식으로 생성된 객체</strong>의 프로토타입은 <code>Object.prototype</code>을 참조하고 있는데 <strong>생성자 함수로 생성된 객체</strong>의 프로토타입은 생성자 함수로 인해 생성된 생성자 함수 객체가 <code>Object.prototype</code>을 참조하고 있다. </p>
+</section>
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#javascript" >
+    <span class="tag-code">javascript</span>
+  </a>
+
+  <a href="/tags#prototype" >
+    <span class="tag-code">prototype</span>
+  </a>
+
+  <a href="/tags#프로토타입체이닝" >
+    <span class="tag-code">프로토타입체이닝</span>
+  </a>
+
+      </div>
+    
+    
+      <div id="comments"></div>
+    
+  </article>
+</main>
+
+<script>
+  (function () {
+    var url = 'http://sirudduk.github.io/2017/07/20/02-prototype/';
+    $('#article-banner').geopattern(url)
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png') 
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      var imageW = $(this).width()
+      var imageH = $(this).height()
+      
+      var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+      zoom = zoom < 1 ? 1 : zoom
+      zoom = zoom > 2 ? 2 : zoom
+      var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+      $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+      $('.image-view-wrap').addClass('wrap-active')
+      $('.image-view-wrap img').css({
+        'width': `${imageW}`,
+        'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+      })
+      $('html').css('overflow', 'hidden')
+
+      $('.image-view-wrap').on('click', function() {
+        $(this).remove()
+        $('html').attr('style', '')
+      })
+    })
+
+    // gitment
+    var gitmentConfig = "sirudduk";
+    if (gitmentConfig != "undefined") {
+      var gitment = new Gitment({
+        id: "프로토타입, 프로토타입 체이닝",
+        owner: "sirudduk",
+        repo: "sirudduk.github.io",
+        oauth: {
+          client_id: "b2303c791eef79dbc2dc",
+          client_secret: "be7699cebf65479b59975b24ae1d33f1ac08a051"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2017 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine == 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
