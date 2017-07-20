@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>sirudduk dev blog</title>
+  <subtitle>frontend 신입 개발자</subtitle>
+  <link href="/feed.xml" rel="self"/>
+  
+  <link href="http://sirudduk.github.io/"/>
+  <updated>2017-07-20T02:24:10.005Z</updated>
+  <id>http://sirudduk.github.io/</id>
+  
+  <author>
+    <name>sirudduk</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>프로토타입, 프로토타입 체이닝</title>
+    <link href="http://sirudduk.github.io/2017/07/20/02-prototype/"/>
+    <id>http://sirudduk.github.io/2017/07/20/02-prototype/</id>
+    <published>2017-07-20T02:10:16.000Z</published>
+    <updated>2017-07-20T02:24:10.005Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="prototype-chaining"><a href="#prototype-chaining" class="headerlink" title="prototype chaining"></a>prototype chaining</h2><h4 id="1-프로토타입의-의미"><a href="#1-프로토타입의-의미" class="headerlink" title="1. 프로토타입의 의미"></a>1. 프로토타입의 의미</h4><p>자바와 같은 객체지향 프로그래밍에서는 클래스를 정의하고 이를 통해 객체를 생성하지만, 자바스크립트에서는 이러한 클래스 개념이 없다.<br>대신 객체 리터럴이나 생성자 함수를 통해 객체를 생성하고 이때 생성된 부모 객체가 바로 <strong>프로토타입</strong>객체 이다.<br>이 <strong>프로토타입</strong> 객체를 통해 다른 언어처럼 상속을 구현할수 있다.<br>자바스크립트의 모든 객체는 부모인 프로토타입 객체를 가리키는 참조 링크 형태의 숨겨진 프로퍼티가 있다.<br><strong>ECMAScript</strong>에서는 이러한 링크를 <strong>암묵적 프로토타입 링크</strong>(implicit prototype link)라고 부르며 이러한 링크는 모든 객체의 <strong>[[Prototype]]</strong>프로퍼티에 저장된다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Person 생성자 함수</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">	<span class="keyword">this</span>.name = name;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// foo 객체 생성</span></div><div class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Person(<span class="string">'foo'</span>);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.dir(Person);</div><div class="line"><span class="built_in">console</span>.dir(foo);</div></pre></td></tr></table></figure>
+<p>위 예제의 출력 결과를 확인해보면 <code>Person</code>생성자 함수의 <code>prototype</code> 프로퍼티로 <code>Person.prototype</code>객체를 가르키고 <code>Person.prototype</code>객체의 <code>constructor</code>는 <code>Person</code>생성자 함수를 가르킨다.<br>그리고 새로 생성된 <code>foo</code>객체의 <code>__proto__</code>,즉 [[Prototype]]은 <code>Person.prototype</code>객체를 가리킨다.<br>(<code>__proto__</code>는 크롬이나 파이어폭스에서 명시적으로 제공하는 프로퍼티이고 <strong>ECMAScript</strong>에서는 [[Prototype]]프로퍼티라 칭한다. 따라서 서로 같다고 간주하면 된다.)<br>다시말해 <code>__proto__</code>프로퍼티는 모든 객체에 존재하는 숨겨진 프로퍼티로 객체 자신의 프로토타입 객체를 가리키는 참조 링크 정보다.</p>
+<h4 id="2-프로토타입-체이닝"><a href="#2-프로토타입-체이닝" class="headerlink" title="2. 프로토타입 체이닝"></a>2. 프로토타입 체이닝</h4><h5 id="2-1-객체-리터럴-방식으로-생성된-객체의-프로토타입-체이닝"><a href="#2-1-객체-리터럴-방식으로-생성된-객체의-프로토타입-체이닝" class="headerlink" title="2-1 객체 리터럴 방식으로 생성된 객체의 프로토타입 체이닝"></a>2-1 객체 리터럴 방식으로 생성된 객체의 프로토타입 체이닝</h5><p><strong>프로토타입 체이닝</strong>이란 자바스크립트에서 특정 객체의 프로퍼티나 메서드에 접근하려고 할 때, 해당 객체에 접근하려는 프로퍼티 또는 메서드가 없다면 [[Prototype]]링크를 따라 자신의 부모 역할을 하는 프로토타입 객체의 프로퍼티를 차례대로 검색하는 것을 <strong>프로토타입 체이닝</strong>이라고 한다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Obj = &#123;</div><div class="line">	<span class="attr">name</span>: <span class="string">'foo'</span>,</div><div class="line">	<span class="attr">sayName</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'My name is'</span> + <span class="keyword">this</span>.name);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Obj.sayName();	<span class="comment">// My name is foo</span></div><div class="line"><span class="built_in">console</span>.log(Obj.hasOwnproperty(<span class="string">'name'</span>)); <span class="comment">// true</span></div><div class="line"><span class="built_in">console</span>.log(Obj.hasOwnproperty(<span class="string">'age'</span>));  <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<p>위 예제를 살펴보면 <code>Obj.hasOwnproperty()</code>메서드가 <code>Obj</code>객체의 메서드가 아닌데 정상동작 하였다.<br>앞에서 객체를 리터럴방식으로 생성하였을때는 <code>Object()</code>생성자 함수를 통해 생성된다고 했다.<br>이때 프로토타입 체이닝으로 인해 <code>Obj</code>객체의 [[Prototype]] 링크를 따라 <code>Object.prototype</code>프로토타입 객체 내에 <code>hasOwnProperty()</code>메서드가 있는지 검색하여 실행한다.<br><code>hasOwnProperty()</code>메서드는 자바스크립트 표준 API로 <code>Obeject.prototype</code>에 포함되어 있다.<br>따라서 <code>Obj</code>객체내에 <code>hasOwnProperty()</code>메서드가 없어도 에러가 나지 않고 정상적으로 코드가 수행된다.</p>
+<h5 id="2-2-생성자-함수-방식으로-생성된-객체와-프로토타입-체이닝"><a href="#2-2-생성자-함수-방식으로-생성된-객체와-프로토타입-체이닝" class="headerlink" title="2-2 생성자 함수 방식으로 생성된 객체와 프로토타입 체이닝"></a>2-2 생성자 함수 방식으로 생성된 객체와 프로토타입 체이닝</h5><p>위의 <strong>객체 리터럴 방식으로 생성된 객체</strong>의 프로토타입은 <code>Object.prototype</code>을 참조하고 있는데 <strong>생성자 함수로 생성된 객체</strong>의 프로토타입은 생성자 함수로 인해 생성된 생성자 함수 객체가 <code>Object.prototype</code>을 참조하고 있다. </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;prototype-chaining&quot;&gt;&lt;a href=&quot;#prototype-chaining&quot; class=&quot;headerlink&quot; title=&quot;prototype chaining&quot;&gt;&lt;/a&gt;prototype chaining&lt;/h2&gt;&lt;h4 id=&quot;1
+    
+    </summary>
+    
+    
+      <category term="javascript" scheme="http://sirudduk.github.io/tags/javascript/"/>
+    
+      <category term="prototype" scheme="http://sirudduk.github.io/tags/prototype/"/>
+    
+      <category term="프로토타입체이닝" scheme="http://sirudduk.github.io/tags/%ED%94%84%EB%A1%9C%ED%86%A0%ED%83%80%EC%9E%85%EC%B2%B4%EC%9D%B4%EB%8B%9D/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>return</title>
+    <link href="http://sirudduk.github.io/2017/07/20/03-return/"/>
+    <id>http://sirudduk.github.io/2017/07/20/03-return/</id>
+    <published>2017-07-20T02:10:16.000Z</published>
+    <updated>2017-07-20T02:24:05.359Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="함수-리턴"><a href="#함수-리턴" class="headerlink" title="함수 리턴"></a>함수 리턴</h2><p>자바스립트 함수는 <strong>항상 리턴값을 반환</strong>한다.<br>리턴값을 지정하지 않았을 경우, <code>undefined</code> 값이 리턴된다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>) </span>&#123;</div><div class="line">	<span class="keyword">this</span>.name = name;</div><div class="line">	<span class="keyword">this</span>.age = age;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> &#123;<span class="attr">name</span>: <span class="string">'sirudduk'</span>, <span class="attr">age</span>: <span class="string">'25'</span>&#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Person(<span class="string">'foo'</span>,<span class="number">30</span>);</div><div class="line"><span class="built_in">console</span>.dir(foo);</div></pre></td></tr></table></figure>
+<p>생성자 함수에서 별도의 리턴값을 지정하지 않을 경우 <code>this</code>로 바인딩된<br><strong>새로 생성된 객체가 리턴</strong>된다.<br>객체나 배열이 아닌 <code>boolean</code>,<code>number</code>,<code>string</code>을 리턴값으로 지정하면<br>이를 <strong>무시</strong>하고 <code>this</code>에 <strong>바인딩된 객체가 리턴</strong>된다.<br>이 예제를 보면 알수 있듯이 객체 리터럴 방식의 특정 객체로 리턴값을 지정한 경우<br><code>new</code> 연산자로 <code>Person()</code>생상자 함수를 호출해서 새로운 객체를 생성하더라도,<br>리턴값에서 명시적으로 넘긴 객체나 배열이 리턴된다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>) </span>&#123;</div><div class="line">	<span class="keyword">this</span>.name = name;</div><div class="line">	<span class="keyword">this</span>.age = age;</div><div class="line"></div><div class="line">	<span class="keyword">return</span> <span class="number">100</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Person(<span class="string">'foo'</span>,<span class="number">30</span>);</div><div class="line"><span class="built_in">console</span>.log(foo);  <span class="comment">// 출력값 Person &#123;name: 'foo', age: 30&#125;</span></div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;함수-리턴&quot;&gt;&lt;a href=&quot;#함수-리턴&quot; class=&quot;headerlink&quot; title=&quot;함수 리턴&quot;&gt;&lt;/a&gt;함수 리턴&lt;/h2&gt;&lt;p&gt;자바스립트 함수는 &lt;strong&gt;항상 리턴값을 반환&lt;/strong&gt;한다.&lt;br&gt;리턴값을 지정하지 않았을 
+    
+    </summary>
+    
+    
+      <category term="javascript" scheme="http://sirudduk.github.io/tags/javascript/"/>
+    
+      <category term="return" scheme="http://sirudduk.github.io/tags/return/"/>
+    
+      <category term="function" scheme="http://sirudduk.github.io/tags/function/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Closure</title>
+    <link href="http://sirudduk.github.io/2017/07/20/01-closure/"/>
+    <id>http://sirudduk.github.io/2017/07/20/01-closure/</id>
+    <published>2017-07-20T01:50:23.000Z</published>
+    <updated>2017-07-20T02:24:01.021Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Closure"><a href="#Closure" class="headerlink" title="Closure"></a>Closure</h1><h2 id="1-Closure의-의미"><a href="#1-Closure의-의미" class="headerlink" title="1. Closure의 의미"></a>1. Closure의 의미</h2><h4 id="보통-자바스크립트내에서는-함수의-생명주기는-끝이났지만-함수내의-변수를-내부함수가-참조하고-있기-때문에-유지되어-접근할수-있는-함수를-클로저라고-한다"><a href="#보통-자바스크립트내에서는-함수의-생명주기는-끝이났지만-함수내의-변수를-내부함수가-참조하고-있기-때문에-유지되어-접근할수-있는-함수를-클로저라고-한다" class="headerlink" title="보통 자바스크립트내에서는 함수의 생명주기는 끝이났지만 함수내의 변수를 내부함수가  참조하고 있기 때문에 유지되어 접근할수 있는 함수를 클로저라고 한다."></a>보통 자바스크립트내에서는 함수의 생명주기는 끝이났지만 함수내의 변수를 내부함수가  참조하고 있기 때문에 유지되어 접근할수 있는 함수를 <strong>클로저</strong>라고 한다.</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">outFunc</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">var</span> x = <span class="number">10</span>;</div><div class="line">	<span class="keyword">var</span> innerFunc = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(x);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> innerFunc;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> inner = outFunc();</div><div class="line">inner(); <span class="comment">// 10</span></div></pre></td></tr></table></figure>
+<p>이 예제는 자바스크립트로 클로저를 구현하는 전형적인 패턴이다.<br><code>outFunc</code>함수를 살펴보면 변수 <code>x</code>가 생성되고 <code>innerFunc</code>함수가 생성되는데 이 함수는 x값을 콘솔창에 보여주는 함수다.<br>그리고 <code>innerFunc</code>함수가 끝나고 <code>outFunc</code>함수는 <code>innerFunc</code>를 반환한다. 이제 <code>outFunc()</code>의 결과 값을 변수 <code>inner</code>가 참조하게 했다. 이때 이미 생명주기가 끝난 <code>outFunc</code>함수의 변수를 참조하는 함수 <code>innerFunc</code>를 <strong>클로저</strong>이다.<br>클로저를 사용한 코드는 사용하지 않은 코드보다 메모리 부담이 많아진다. 그렇다고 클로저를 쓰지 않는 것은 자바스크립트의 강력한 기능 하나를 안쓰게 되는것이다. 그러므로 클로저를 적재적소로 잘 사용해야하는데 그러기 위해 많은 프로그래밍 연습이 필요한 부분이다.</p>
+<h2 id="2-Closure의-활용"><a href="#2-Closure의-활용" class="headerlink" title="2. Closure의 활용"></a>2. Closure의 활용</h2><p>클로저는 자바스크립트의 강력한 기능이지만 너무 남발하여 사용하면 안된다.<br>이 예제는 클로저에서 사용자가 쉽게 간과할 수 있는 예제이다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">outFunc</span>(<span class="params">argNum</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> num = argNum;</div><div class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">		num += x;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'num : '</span> + num);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> exam = outFunc(<span class="number">40</span>);</div><div class="line">exam(<span class="number">5</span>);   <span class="comment">// 45</span></div><div class="line">exam(<span class="number">-10</span>); <span class="comment">// 35</span></div></pre></td></tr></table></figure>
+<p><code>exam</code> 값을 호출할 때마다, 자유변수 <code>num</code>의 값은 <strong>계속해서 변하므로 주의</strong>해야 한다.<br>이 예제는 아마 이해하기 쉬운 클로저의 아주 기본적인 예제이다.</p>
+<p>다음 예제를 보자.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> x = <span class="number">1</span>;</div><div class="line">	<span class="keyword">return</span> &#123;</div><div class="line">		<span class="attr">func1</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(++x);&#125;,</div><div class="line">		<span class="attr">func2</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(-x);&#125;</div><div class="line">	&#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> exam = func();</div><div class="line">exam.func1();  <span class="comment">//  2</span></div><div class="line">exam.func2();  <span class="comment">// -2</span></div><div class="line">exam.func1();  <span class="comment">//  3</span></div><div class="line">exam.func2();  <span class="comment">// -3</span></div></pre></td></tr></table></figure>
+<p>위 예제는 <strong>하나의 클로저가 여러 함수 객체의 스코프 체인에 들어가 있는 경우</strong>이다. 리턴값으로 반환되는 객체에 두개의 함수가 정의되어 있는데, 두 함수 모두 자유변수 <code>x</code>를 참조한다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params">sec</span>) </span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= sec; i++) &#123;</div><div class="line">		setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="built_in">console</span>.log(i);</div><div class="line">		&#125;,i * <span class="number">1000</span>);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line">Counter(<span class="number">3</span>);</div></pre></td></tr></table></figure>
+<p><code>Counter</code>라는 함수에 인자값으로 <code>3</code>이라는 값을 주고 실행시켰다. 아마 클로저의 개념을 잘 이해하고 있지 못하다면 값이 이상하다고 생각할것이다. 나도 처음엔 위의 예제가 너무 이해가 안가 골치가 아팠다.<br>다시 코드로 돌아가보면 <code>Counter</code>함수를 실행시키면 <code>for</code>문이 실행된다.<br><code>for</code>문 안에는 <code>setTimeout()</code>이라는 <code>window</code> 기본 메서드가 있다.<br><code>setTimeout()</code> 메서드는 매개변수로 함수와 시간(delay)을 받는다.<br>자, 여기서 <code>Counter(3)</code>함수를 실행시키면 <code>for</code>문이 실행되고 <code>for</code>문 <code>i</code>의 초기설정값은 <code>1</code>이다.<br><code>Counter</code>함수의 인자값으로 <code>3</code>을 전달 하므로 루프는 3번 실행된다.<br> 이때 <code>for</code>문 안에 <code>setTimeout</code>메서드는 <code>for</code>문이 끝난후 실행되는데 <code>setTimeout()</code>이 실행할때 참조하는 <code>i</code>의 값은 <code>for</code>문이 종료될때의 값인 <code>4</code>를 가진다.<br>즉 <code>for</code>문 내부의 코드는 즉시실행되는 반면 <code>setTimeout()</code>은 비동기 실행문이라 <code>setTimeout()</code>의 실행시점과 <code>for</code>문의 실행시점은 다르다.<br>그리하여 <code>console.log(i)</code>의 출력값은 4가 1초에 한번씩 세번 출력된다.</p>
+<p>그럼 원하는 값을 얻기위해 코드를 수정해보자.<br><code>setTimeout()</code> 메서드를 즉시실행함수로 감싸 <code>for</code>문과 실행시점을 맞추는 코드이다.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params">sec</span>) </span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= sec; i++) &#123;</div><div class="line">		(<span class="function"><span class="keyword">function</span> (<span class="params">innerSec</span>) </span>&#123;</div><div class="line">			setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				<span class="built_in">console</span>.log(innerSec);</div><div class="line">			&#125;,innerSec * <span class="number">1000</span>);</div><div class="line">		&#125;(i));</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Counter(<span class="number">3</span>);</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Closure&quot;&gt;&lt;a href=&quot;#Closure&quot; class=&quot;headerlink&quot; title=&quot;Closure&quot;&gt;&lt;/a&gt;Closure&lt;/h1&gt;&lt;h2 id=&quot;1-Closure의-의미&quot;&gt;&lt;a href=&quot;#1-Closure의-의미&quot; class
+    
+    </summary>
+    
+    
+      <category term="javascript" scheme="http://sirudduk.github.io/tags/javascript/"/>
+    
+      <category term="closure" scheme="http://sirudduk.github.io/tags/closure/"/>
+    
+      <category term="클로저" scheme="http://sirudduk.github.io/tags/%ED%81%B4%EB%A1%9C%EC%A0%80/"/>
+    
+      <category term="frontend" scheme="http://sirudduk.github.io/tags/frontend/"/>
+    
+  </entry>
+  
+</feed>
