@@ -32,7 +32,7 @@
       
         <li class="list-item">
           
-            <a href="/" class="item-link active">Home</a>
+            <a href="/" class="item-link">Home</a>
           
         </li>
       
@@ -71,7 +71,7 @@
         
           <li class="menu-item">
             
-              <a href="/" class="menu-link mobile-active">Home</a>
+              <a href="/" class="menu-link">Home</a>
             
           </li>
         
@@ -104,45 +104,38 @@
   </div>
 </header>
 
-    <main class="app-body">
+    <div id="article-banner">
+  <h2>Archives</h2>
+  <p class="post-date">test</p>
+</div>
+<main class="app-body" id="archives">
   
-    <article class="article-card">
-      <h2 class="article-head">
-        <a href="/2017/07/20/01-closure/">01_closure</a>
-      </h2>
-      <p class="article-date">July 20, 2017</p>
-      
-        
-  <a href="/tags#javascript" >
-    <span class="tag-code">javascript</span>
-  </a>
-
-  <a href="/tags#closure" >
-    <span class="tag-code">closure</span>
-  </a>
-
-  <a href="/tags#클로저" >
-    <span class="tag-code">클로저</span>
-  </a>
-
-  <a href="/tags#frontend" >
-    <span class="tag-code">frontend</span>
-  </a>
-
-      
-      <div class="article-summary">
-        
-          Closure1. Closure의 의미보통 자바스크립트내에서는 함수의 생명주기는 끝이났지만 함수내의 변수를 내부함수가  참조하고 있기 때문에 유지되어 접근할수 있는 함수를 클로저라고 한다.12345678910function outFunc()&#123;		var  ...
-        
+  
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2017
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/2017/07/20/01-closure/" class="archive-title">01_closure</a>
+        <p class="archive-date">07-20</p>
       </div>
-      <a class="more" href="/2017/07/20/01-closure/">Read more</a>
-    </article>
-  
-
+    
+  </div>
+</section>
   
 </main>
 
-
+<script>
+  (function () {
+    var url = 'http://sirudduk.github.io/tags/javascript/index.html';
+    $('#article-banner').geopattern(url);
+    $('.header').removeClass('fixed-header');
+  })();
+</script>
     <div class="scroll-top">
   <span class="arrow-icon"></span>
 </div>

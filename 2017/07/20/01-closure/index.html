@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="sirudduk blog">
+  <meta name="keyword" content="sirudduk, vuejs">
+  <title>
+    
+      01_closure | sirudduk dev blog
+    
+  </title>
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+</head>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>sirudduk dev blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>01_closure</h2>
+  <p class="post-date">2017-07-20</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body">
+  <article class="post-article">
+    <section class="markdown-content"><h1 id="Closure"><a href="#Closure" class="headerlink" title="Closure"></a>Closure</h1><h2 id="1-Closure의-의미"><a href="#1-Closure의-의미" class="headerlink" title="1. Closure의 의미"></a>1. Closure의 의미</h2><h4 id="보통-자바스크립트내에서는-함수의-생명주기는-끝이났지만-함수내의-변수를-내부함수가-참조하고-있기-때문에-유지되어-접근할수-있는-함수를-클로저라고-한다"><a href="#보통-자바스크립트내에서는-함수의-생명주기는-끝이났지만-함수내의-변수를-내부함수가-참조하고-있기-때문에-유지되어-접근할수-있는-함수를-클로저라고-한다" class="headerlink" title="보통 자바스크립트내에서는 함수의 생명주기는 끝이났지만 함수내의 변수를 내부함수가  참조하고 있기 때문에 유지되어 접근할수 있는 함수를 클로저라고 한다."></a>보통 자바스크립트내에서는 함수의 생명주기는 끝이났지만 함수내의 변수를 내부함수가  참조하고 있기 때문에 유지되어 접근할수 있는 함수를 <strong>클로저</strong>라고 한다.</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">outFunc</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	</div><div class="line">	<span class="keyword">var</span> x = <span class="number">10</span>;</div><div class="line">	<span class="keyword">var</span> innerFunc = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(x);</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> innerFunc;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> inner = outFunc();</div><div class="line">inner(); <span class="comment">// 10</span></div></pre></td></tr></table></figure>
+<p>이 예제는 자바스크립트로 클로저를 구현하는 전형적인 패턴이다.<br><code>outFunc</code>함수를 살펴보면 변수 <code>x</code>가 생성되고 <code>innerFunc</code>함수가 생성되는데 이 함수는 x값을 콘솔창에 보여주는 함수다.<br>그리고 <code>innerFunc</code>함수가 끝나고 <code>outFunc</code>함수는 <code>innerFunc</code>를 반환한다. 이제 <code>outFunc()</code>의 결과 값을 변수<br><code>inner</code>가 참조하게 했다. 이때 이미 생명주기가 끝난 <code>outFunc</code>함수의 변수를 참조하는 함수 <code>innerFunc</code>를 <strong>클로저</strong>이다.<br>클로저를 사용한 코드는 사용하지 않은 코드보다 메모리 부담이 많아진다. 그렇다고 클로저를 쓰지 않는 것은 자바스크립트의 강력한 기능<br>하나를 안쓰게 되는것이다. 그러므로 클로저를 적재적소로 잘 사용해야하는데 그러기 위해 많은 프로그래밍 연습이 필요한 부분이다.  </p>
+<h2 id="2-Closure의-활용"><a href="#2-Closure의-활용" class="headerlink" title="2. Closure의 활용"></a>2. Closure의 활용</h2><p>클로저는 자바스크립트의 강력한 기능이지만 너무 남발하여 사용하면 안된다.<br>이 예제는 클로저에서 사용자가 쉽게 간과할 수 있는 예제이다.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">outFunc</span>(<span class="params">argNum</span>) </span>&#123;</div><div class="line">	<span class="keyword">var</span> num = argNum;</div><div class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</div><div class="line">		num += x;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'num : '</span> + num);</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> exam = outFunc(<span class="number">40</span>);</div><div class="line">exam(<span class="number">5</span>);   <span class="comment">// 45</span></div><div class="line">exam(<span class="number">-10</span>); <span class="comment">// 35</span></div></pre></td></tr></table></figure>
+<p><code>exam</code> 값을 호출할 때마다, 자유변수 <code>num</code>의 값은 <strong>계속해서 변하므로 주의</strong>해야 한다.<br>이 예제는 아마 이해하기 쉬운 클로저의 아주 기본적인 예제이다.  </p>
+<p>다음 예제를 보자.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">func</span>(<span class="params"></span>)</span>&#123;</div><div class="line">	<span class="keyword">var</span> x = <span class="number">1</span>;</div><div class="line">	<span class="keyword">return</span> &#123;</div><div class="line">		<span class="attr">func1</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(++x);&#125;,</div><div class="line">		<span class="attr">func2</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(-x);&#125;</div><div class="line">	&#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> exam = func();</div><div class="line">exam.func1();  <span class="comment">//  2</span></div><div class="line">exam.func2();  <span class="comment">// -2</span></div><div class="line">exam.func1();  <span class="comment">//  3</span></div><div class="line">exam.func2();  <span class="comment">// -3</span></div></pre></td></tr></table></figure>
+<p>위 예제는 <strong>하나의 클로저가 여러 함수 객체의 스코프 체인에 들어가 있는 경우</strong>이다. 리턴값으로 반환되는 객체에 두개의 함수가<br>정의되어 있는데, 두 함수 모두 자유변수 <code>x</code>를 참조한다.   </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params">sec</span>) </span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= sec; i++) &#123;</div><div class="line">		setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">			<span class="built_in">console</span>.log(i);</div><div class="line">		&#125;,i * <span class="number">1000</span>);</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line">Counter(<span class="number">3</span>);</div></pre></td></tr></table></figure>
+<p><code>Counter</code>라는 함수에 인자값으로 <code>3</code>이라는 값을 주고 실행시켰다. 아마 클로저의 개념을 잘 이해하고 있지 못하다면 값이 이상하다고<br>생각할것이다. 나도 처음엔 위의 예제가 너무 이해가 안가 골치가 아팠다. 다시 코드로 돌아가보면 <code>Counter</code>함수를 실행시키면 <code>for</code>문이<br>실행된다. <code>for</code>문 안에는 <code>setTimeout()</code>이라는 <code>window</code> 기본 메서드가 있다. <code>setTimeout()</code> 메서드는 매개변수로 함수와<br>시간(delay)을 받는다. 자, 여기서 <code>Counter(3)</code>함수를 실행시키면 <code>for</code>문이 실행되고 <code>for</code>문 <code>i</code>의 초기설정값은 <code>1</code>이다.<br><code>Counter</code>함수의 인자값으로 <code>3</code>을 전달 하므로 루프는 3번 실행된다. 이때 <code>for</code>문 안에 <code>setTimeout</code>메서드는 <code>for</code>문이 끝난후<br>실행되는데 <code>setTimeout()</code>이 실행할때 참조하는 <code>i</code>의 값은 <code>for</code>문이 종료될때의 값인 <code>4</code>를 가진다.<br>즉 <code>for</code>문 내부의 코드는 즉시실행되는 반면 <code>setTimeout()</code>은 비동기 실행문이라 <code>setTimeout()</code>의 실행시점과 <code>for</code>문의<br>실행시점은 다르다. 그리하여 <code>console.log(i)</code>의 출력값은 4가 1초에 한번씩 세번 출력된다.  </p>
+<p>그럼 원하는 값을 얻기위해 코드를 수정해보자.<br><code>setTimeout()</code> 메서드를 즉시실행함수로 감싸 <code>for</code>문과 실행시점을 맞추는 코드이다.  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params">sec</span>) </span>&#123;</div><div class="line">	<span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i &lt;= sec; i++) &#123;</div><div class="line">		(<span class="function"><span class="keyword">function</span> (<span class="params">innerSec</span>) </span>&#123;</div><div class="line">			setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">				<span class="built_in">console</span>.log(innerSec);</div><div class="line">			&#125;,innerSec * <span class="number">1000</span>);</div><div class="line">		&#125;(i));</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">Counter(<span class="number">3</span>);</div></pre></td></tr></table></figure>
+</section>
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#javascript" >
+    <span class="tag-code">javascript</span>
+  </a>
+
+  <a href="/tags#closure" >
+    <span class="tag-code">closure</span>
+  </a>
+
+  <a href="/tags#클로저" >
+    <span class="tag-code">클로저</span>
+  </a>
+
+  <a href="/tags#frontend" >
+    <span class="tag-code">frontend</span>
+  </a>
+
+      </div>
+    
+    
+      <div id="comments"></div>
+    
+  </article>
+</main>
+
+<script>
+  (function () {
+    var url = 'http://sirudduk.github.io/2017/07/20/01-closure/';
+    $('#article-banner').geopattern(url)
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png') 
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      var imageW = $(this).width()
+      var imageH = $(this).height()
+      
+      var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+      zoom = zoom < 1 ? 1 : zoom
+      zoom = zoom > 2 ? 2 : zoom
+      var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+      $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+      $('.image-view-wrap').addClass('wrap-active')
+      $('.image-view-wrap img').css({
+        'width': `${imageW}`,
+        'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+      })
+      $('html').css('overflow', 'hidden')
+
+      $('.image-view-wrap').on('click', function() {
+        $(this).remove()
+        $('html').attr('style', '')
+      })
+    })
+
+    // gitment
+    var gitmentConfig = "sirudduk";
+    if (gitmentConfig != "undefined") {
+      var gitment = new Gitment({
+        id: "01_closure",
+        owner: "sirudduk",
+        repo: "sirudduk.github.io",
+        oauth: {
+          client_id: "b2303c791eef79dbc2dc",
+          client_secret: "be7699cebf65479b59975b24ae1d33f1ac08a051"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2017 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine == 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+  </body>
+</html>
