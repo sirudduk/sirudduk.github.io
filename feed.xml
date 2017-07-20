@@ -5,7 +5,7 @@
   <link href="/feed.xml" rel="self"/>
   
   <link href="http://sirudduk.github.io/"/>
-  <updated>2017-07-20T02:24:10.005Z</updated>
+  <updated>2017-07-20T06:59:44.033Z</updated>
   <id>http://sirudduk.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>프로토타입, 프로토타입 체이닝</title>
+    <title>프로토타입,프로토타입 체이닝</title>
     <link href="http://sirudduk.github.io/2017/07/20/02-prototype/"/>
     <id>http://sirudduk.github.io/2017/07/20/02-prototype/</id>
     <published>2017-07-20T02:10:16.000Z</published>
-    <updated>2017-07-20T02:24:10.005Z</updated>
+    <updated>2017-07-20T06:59:44.033Z</updated>
     
     <content type="html"><![CDATA[<h2 id="prototype-chaining"><a href="#prototype-chaining" class="headerlink" title="prototype chaining"></a>prototype chaining</h2><h4 id="1-프로토타입의-의미"><a href="#1-프로토타입의-의미" class="headerlink" title="1. 프로토타입의 의미"></a>1. 프로토타입의 의미</h4><p>자바와 같은 객체지향 프로그래밍에서는 클래스를 정의하고 이를 통해 객체를 생성하지만, 자바스크립트에서는 이러한 클래스 개념이 없다.<br>대신 객체 리터럴이나 생성자 함수를 통해 객체를 생성하고 이때 생성된 부모 객체가 바로 <strong>프로토타입</strong>객체 이다.<br>이 <strong>프로토타입</strong> 객체를 통해 다른 언어처럼 상속을 구현할수 있다.<br>자바스크립트의 모든 객체는 부모인 프로토타입 객체를 가리키는 참조 링크 형태의 숨겨진 프로퍼티가 있다.<br><strong>ECMAScript</strong>에서는 이러한 링크를 <strong>암묵적 프로토타입 링크</strong>(implicit prototype link)라고 부르며 이러한 링크는 모든 객체의 <strong>[[Prototype]]</strong>프로퍼티에 저장된다.</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Person 생성자 함수</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</div><div class="line">	<span class="keyword">this</span>.name = name;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// foo 객체 생성</span></div><div class="line"><span class="keyword">var</span> foo = <span class="keyword">new</span> Person(<span class="string">'foo'</span>);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.dir(Person);</div><div class="line"><span class="built_in">console</span>.dir(foo);</div></pre></td></tr></table></figure>
