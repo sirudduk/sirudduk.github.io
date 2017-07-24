@@ -6,10 +6,10 @@
   <meta name="description" content="끄적끄적">
   <meta name="keyword" content="sirudduk, vuejs">
   <meta name="naver-site-verification" content="ec064e6d3be3bf56fc8352fa4d6262f19df15919"/>
-  <link rel="canonical" href="http://sirudduk.github.io/tags/클로저/"/>
+  <link rel="canonical" href="http://sirudduk.github.io/2017/07/24/test01/"/>
   <title>
     
-      sirudduk dev blog
+      꺌빠잏냐아까뜨우야따 | sirudduk dev blog
     
   </title>
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -117,57 +117,88 @@
 </header>
 
     <div id="article-banner">
-  <h2>Archives</h2>
-  <p class="post-date">test</p>
-</div>
-<main class="app-body" id="archives">
-  
-  
-  
-    <section class="time-section">
-  <h1 class="section-year">
-    2017
-  </h1>
-  <div class="section-list">
-    
-    
-      <div class="section-list-item">
-        <a href="/2017/07/24/test01/" class="archive-title">꺌빠잏냐아까뜨우야따</a>
-        <p class="archive-date">07-24</p>
-      </div>
-    
-      <div class="section-list-item">
-        <a href="/2017/07/24/test/" class="archive-title">왜검색이안돼</a>
-        <p class="archive-date">07-24</p>
-      </div>
-    
-      <div class="section-list-item">
-        <a href="/2017/07/20/03-return/" class="archive-title">return</a>
-        <p class="archive-date">07-20</p>
-      </div>
-    
-      <div class="section-list-item">
-        <a href="/2017/07/20/02-prototype/" class="archive-title">프로토타입 프로토타입 체이닝</a>
-        <p class="archive-date">07-20</p>
-      </div>
-    
-      <div class="section-list-item">
-        <a href="/2017/07/20/01-closure/" class="archive-title">Closure</a>
-        <p class="archive-date">07-20</p>
-      </div>
-    
+  <h2>꺌빠잏냐아까뜨우야따</h2>
+  <p class="post-date">2017-07-24</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
   </div>
+</div>
+<main class="app-body">
+  <article class="post-article">
+    <section class="markdown-content"><p>테스트중입니다.</p>
 </section>
-  
+    
+    
+      <div id="comments"></div>
+    
+  </article>
 </main>
 
 <script>
   (function () {
-    var url = 'http://sirudduk.github.io/tags/클로저/index.html';
-    $('#article-banner').geopattern(url);
-    $('.header').removeClass('fixed-header');
+    var url = 'http://sirudduk.github.io/2017/07/24/test01/';
+    $('#article-banner').geopattern(url)
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png') 
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      var imageW = $(this).width()
+      var imageH = $(this).height()
+      
+      var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+      zoom = zoom < 1 ? 1 : zoom
+      zoom = zoom > 2 ? 2 : zoom
+      var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+      $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+      $('.image-view-wrap').addClass('wrap-active')
+      $('.image-view-wrap img').css({
+        'width': `${imageW}`,
+        'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+      })
+      $('html').css('overflow', 'hidden')
+
+      $('.image-view-wrap').on('click', function() {
+        $(this).remove()
+        $('html').attr('style', '')
+      })
+    })
+
+    // gitment
+    var gitmentConfig = "sirudduk";
+    if (gitmentConfig != "undefined") {
+      var gitment = new Gitment({
+        id: "꺌빠잏냐아까뜨우야따",
+        owner: "sirudduk",
+        repo: "sirudduk.github.io",
+        oauth: {
+          client_id: "b2303c791eef79dbc2dc",
+          client_secret: "be7699cebf65479b59975b24ae1d33f1ac08a051"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
   })();
 </script>
+
     <div class="scroll-top">
   <span class="arrow-icon"></span>
 </div>

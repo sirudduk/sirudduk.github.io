@@ -5,7 +5,7 @@
   <link href="/feed.xml" rel="self"/>
   
   <link href="http://sirudduk.github.io/"/>
-  <updated>2017-07-24T08:10:54.725Z</updated>
+  <updated>2017-07-24T08:13:28.697Z</updated>
   <id>http://sirudduk.github.io/</id>
   
   <author>
@@ -14,6 +14,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>꺌빠잏냐아까뜨우야따</title>
+    <link href="http://sirudduk.github.io/2017/07/24/test01/"/>
+    <id>http://sirudduk.github.io/2017/07/24/test01/</id>
+    <published>2017-07-24T08:13:10.000Z</published>
+    <updated>2017-07-24T08:13:28.697Z</updated>
+    
+    <content type="html"><![CDATA[<p>테스트중입니다.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;테스트중입니다.&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>왜검색이안돼</title>
